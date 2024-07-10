@@ -1,11 +1,7 @@
 import app from "./src/app.js";
-import dotenv from "dotenv";
 import DatabaseCon from "./src/db/database.config.js";
 
-const PORT = 5000;
-dotenv.config({
-    path: "./.env"
-});
+const PORT = process.env.PORT || 5001;
 
 DatabaseCon()
 .then(() => {
