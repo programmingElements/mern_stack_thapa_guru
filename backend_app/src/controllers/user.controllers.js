@@ -19,15 +19,29 @@ const signup = asyncHandler(async (request, response) => {
         return response.status(200).json(new ApiResponse(201, newUser, "signup completed successfully."));
 
     } catch (error) {
-        return response.status(error.statusCode || 500).json(error)
+        return response.status(error.statusCode || 500).json(error);
     }
 })
 
 const login = async (request, response) => {
     try {
-        return response.status(200).json({ message: 'Welcome to login page.'});
+        const {email, password} = request.body;
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            throw new ApiError(400, "Invalid Credentials.");
+        }
+
+        const passwordCorrect = await user.isPasswordCorrect(password);
+
+        if (!passwordCorrect) {
+            throw new ApiError(401, "Invalid Credentials.");
+        }
+
+        return response.status(200).json(new ApiResponse(200, user, "signin completed successfully."));
     } catch (error) {
-        console.log(error);
+        return response.status(error.statusCode || 500).json(error);
     }
 }
 
