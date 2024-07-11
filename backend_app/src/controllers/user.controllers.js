@@ -16,15 +16,16 @@ const signup = asyncHandler(async (request, response) => {
 
         const newUser = await User.create({ username, email, phone, password });
 
-        response.status(200).json(new ApiResponse(201, newUser, "signup completed successfully."));
+        return response.status(200).json(new ApiResponse(201, newUser, "signup completed successfully."));
+
     } catch (error) {
-        response.status(error.statusCode || 500).json(error)
+        return response.status(error.statusCode || 500).json(error)
     }
 })
 
 const login = async (request, response) => {
     try {
-        response.status(200).json({ message: 'Welcome to login page.'});
+        return response.status(200).json({ message: 'Welcome to login page.'});
     } catch (error) {
         console.log(error);
     }
