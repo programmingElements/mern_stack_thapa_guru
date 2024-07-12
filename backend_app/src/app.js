@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import userRouter from "./routes/user.routes.js";
+import { errorMiddleware } from "./middlewares/error.middleware.js";
 
 const app = express();
 
@@ -20,5 +21,8 @@ app.get('/', (request, response) => {
 
 // user routes
 app.use('/api/v1/user', userRouter);
+
+// use error middleware
+app.use(errorMiddleware);
 
 export default app;
