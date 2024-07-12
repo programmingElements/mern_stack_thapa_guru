@@ -4,7 +4,8 @@ const validate = (schema) => async (request, response, next) => {
         request.body = parseBody;
         next();
     } catch (error) {
-        response.status(400).json({ msg: error });
+        // response.status(400).json({ msg: error });
+        next(error);
     }
 }
 
